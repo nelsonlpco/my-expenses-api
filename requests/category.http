@@ -1,0 +1,15 @@
+GET http://localhost:3000/api/category
+
+### get by id
+GET http://localhost:3000/api/category/5fd81305da8fbd42fcc7ad59
+
+### total
+GET http://localhost:3000/api/category/total
+
+### Create category
+POST http://localhost:3000/api/category
+Content-Type: application/json
+
+{
+  "description": "Mercado"
+}

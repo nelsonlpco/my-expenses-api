@@ -1,0 +1,14 @@
+GET http://localhost:3000/api/expense
+
+### Create expense
+POST http://localhost:3000/api/expense
+Content-Type: application/json
+
+{
+  "description": "Mercado",
+  "category": {
+    "_id": "5fd81305da8fbd42fcc7ad59",
+    "description": "Comida"
+  }
+}
+

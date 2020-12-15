@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  api:
+    container_name: library_api
+    image: node:12-alpine
+    restart: always
+    working_dir: /app
+    ports:
+      - 3000:3000
+    volumes:
+      - ../:/app
+    command: yarn start
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongo123
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongo123
+    depends_on:
+      - mongo
+
