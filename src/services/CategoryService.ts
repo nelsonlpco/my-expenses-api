@@ -1,3 +1,4 @@
+import CategoryDTO from "src/domain/dtos/category/CategoryDTO";
 import CreateCategoryDTO from "src/domain/dtos/category/createCategoryDTO";
 import Category from "src/domain/entities/Category";
 import { CategoryRepository } from "src/infra/database/repositories/CategoryRepository";
@@ -10,11 +11,12 @@ export default class CategoryService {
      this._categoryRepository = new CategoryRepository(dbContext);
   }
 
-  async getTotalCategories(): Promise<number> {
-    return await this._categoryRepository.countOfCategories();
-  }
-
   async saveCategory(createCategory: CreateCategoryDTO): Promise<boolean>{
+    const savedCategory = await this._categoryRepository.find(createCategory)
+
+    if(savedCategory.length > 0)
+      throw new Error('Categoria já cadastradas');
+
     return await this._categoryRepository.create(new Category(createCategory.description));
   }
 
@@ -24,9 +26,16 @@ export default class CategoryService {
     return result;
   }
 
-  async getCategories(): Promise<Category[]> {
+  async getCategories(): Promise<CategoryDTO[]> {
     const result = await this._categoryRepository.find();
 
-    return result;
+    const categories = result.sort( (a, b) => {
+      if( a.description > b.description) return 1;
+      else return -1;
+
+      return 0
+    })
+
+    return result.map(category => new CategoryDTO(category.description));
   }
 }

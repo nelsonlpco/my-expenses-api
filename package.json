@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
+    "docker:cleanup": "bash ./scripts/start.sh cleanup",
     "docker:up": "bash ./scripts/start.sh up",
     "docker:stop": "bash ./scripts/start.sh stop",
     "docker:ps": "bash ./scripts/start.sh ps"
@@ -13,7 +14,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.11.6",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.8",

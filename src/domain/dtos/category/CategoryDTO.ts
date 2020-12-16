@@ -1,4 +1,7 @@
 export default class CategoryDTO {
-  _id = '';
-  description = '';
+  description;
+
+  constructor(description?:string) {
+    this.description = description;
+  }
 }

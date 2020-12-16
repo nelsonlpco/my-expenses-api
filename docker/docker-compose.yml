@@ -10,6 +10,8 @@ services:
       - 3000:3000
     volumes:
       - ../:/app
+    environment:
+      ENVFILE: .env.d.dev
     command: yarn start
     depends_on:
       - mongo

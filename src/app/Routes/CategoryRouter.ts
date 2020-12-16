@@ -16,10 +16,6 @@ export default class CategoryRouter implements IRouterBase {
     this._categoryService = new CategoryService(this.dbContext);
   }
 
-  async getTotalCategories(): Promise<number> {
-    return await this._categoryService.getTotalCategories();
-  }
-
   async createCategory(createCategory: CreateCategoryDTO ): Promise<boolean> {
     return await this._categoryService.saveCategory(createCategory);
   }
@@ -56,24 +52,6 @@ export default class CategoryRouter implements IRouterBase {
         try {
           const categories = await this._categoryService.getCategories();
           resp.send(categories);
-
-          return next();
-        } catch (error) {
-          next(`Erro ao contar categorias: ${error.message}`);
-        }
-      }
-    );
-
-    router.get(
-      `${this.path}/total`,
-      async (
-        req: Request,
-        resp: Response,
-        next: NextFunction
-      ): Promise<void> => {
-        try {
-          const total = await this.getTotalCategories();
-          resp.send({total});
 
           return next();
         } catch (error) {

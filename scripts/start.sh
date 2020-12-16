@@ -1,6 +1,12 @@
 
 #!/bin/bash
 
+if [ "$1" == "cleanup" ]
+  then
+    docker-compose -f ./docker/docker-compose.yml rm -f
+    docker-compose -f ./docker/docker-compose.yml up -d
+fi
+
 if [ "$1" == "up" ]
   then docker-compose -f ./docker/docker-compose.yml up -d
 fi

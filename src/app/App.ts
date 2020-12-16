@@ -28,6 +28,12 @@ export default class App {
     this.app.use(morgan('tiny'));
     this.app.use(cors({ credentials: true }));
     this.app.use('/api', this._routerManager.router);
+
+    this.app.use(async (error, req, resp, next) => {
+      resp.send(400, { error: error.message });
+
+      return next();
+    });
   }
 
   async start(): Promise<string> {

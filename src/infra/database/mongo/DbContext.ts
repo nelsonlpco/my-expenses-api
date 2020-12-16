@@ -11,7 +11,6 @@ export default class DbContext implements IDbContext {
     this._configurations = configurations;
   }
   getCollection(collection: string): Collection<any> | undefined {
-    console.log('tentando pegar a collection', this._db)
     if(this._db)
       return this._db.collection(collection);
 

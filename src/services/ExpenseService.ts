@@ -19,7 +19,7 @@ export default class ExpenseService {
     if(!category)
       throw new Error('Categoria não encontrada');
 
-    const expense = new Expense(expenseDTO.description || 'teset', category);
+    const expense = new Expense(expenseDTO.description || '', category, expenseDTO.value || 0);
 
     return await this._expenseRepository.create(expense);
   }
