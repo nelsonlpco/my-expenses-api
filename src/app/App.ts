@@ -30,7 +30,7 @@ export default class App {
     this.app.use('/api', this._routerManager.router);
 
     this.app.use(async (error, req, resp, next) => {
-      resp.send(400, { error: error.message });
+      resp.send(409, { error: error.message });
 
       return next();
     });

@@ -23,11 +23,16 @@ export default abstract class MongoRepository<T extends EntityBase> implements I
     return !!result.result.ok;
   }
 
-  update(id: string, item: T): Promise<boolean> {
-    throw new Error("Method not implemented.");
+  async update(id: string, item: T): Promise<boolean> {
+    const result = await this._collection.updateOne({_id: new ObjectID(id) }, item);
+
+    return !!result.result.ok;
   }
-  delete(id: string): Promise<boolean> {
-    throw new Error("Method not implemented.");
+
+  async delete(category: string): Promise<boolean> {
+    const result = await this._collection.deleteOne({description: category});
+
+    return !!result.result.ok;
   }
   async find(query?: FilterQuery<any>): Promise<T[]> {
     console.log(query)

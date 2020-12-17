@@ -33,9 +33,12 @@ export default class CategoryService {
       if( a.description > b.description) return 1;
       else return -1;
 
-      return 0
     })
 
     return result.map(category => new CategoryDTO(category.description));
+  }
+
+  async removeCategory(category: string): Promise<boolean> {
+    return await this._categoryRepository.delete(category);
   }
 }

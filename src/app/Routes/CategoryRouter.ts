@@ -77,6 +77,26 @@ export default class CategoryRouter implements IRouterBase {
         }
       }
     );
+
+    router.delete(
+      `${this.path}/:category`,
+      async (
+        req: Request,
+        resp: Response,
+        next: NextFunction
+      ): Promise<void> => {
+        try {
+          const category = req.params.category;
+
+          const result = await this._categoryService.removeCategory(category);
+          resp.send(result);
+
+          return next();
+        } catch (error) {
+          next(error.message);
+        }
+      }
+    );
   }
 }
 
