@@ -40,7 +40,7 @@ Given('que consumo o serviço {string} postando os seguintes dados:', async func
   expect(result).toEqual(expectedStatus)
 });
 
-Then('consumo o serviço {string} para excluir os registros:', async function (service, dataTable) {
+async function shouldBeRemoveItemsByService(service, dataTable) {
   const registers = dataTableToJson(dataTable);
   const expectedStatus = new Array(registers.length).fill(200);
 
@@ -53,4 +53,18 @@ Then('consumo o serviço {string} para excluir os registros:', async function (s
   const result = await Promise.all(requests);
 
   expect(result).toEqual(expectedStatus)
-})
+}
+
+Then('consumo o serviço {string} para excluir os registros:', shouldBeRemoveItemsByService);
+
+Given('que consumo o serviço {string} para excluir os registros:', shouldBeRemoveItemsByService);
+
+Then('ao consumir o serviço {string} postando {string} devo receber como status da requisição o código {int}'
+, async function (service, value, statusCode) {
+  const result = await httpClient
+    .post(service, {description: value})
+    .then(d => d.status)
+    .catch(e =>  e.response.status)
+
+  expect(result).toEqual(statusCode);
+});
