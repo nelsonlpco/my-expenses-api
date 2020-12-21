@@ -2,7 +2,7 @@ version: '3'
 
 services:
   api:
-    container_name: library_api
+    container_name: my_expenses_api
     image: node:12-alpine
     restart: always
     working_dir: /app

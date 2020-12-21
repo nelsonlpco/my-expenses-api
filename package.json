@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "test": "jest --coverage",
     "build": "tsc",
     "start": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
     "docker:cleanup": "bash ./scripts/start.sh cleanup",

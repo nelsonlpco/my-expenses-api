@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import CategoryDTO from 'src/domain/dtos/category/CategoryDTO';
 import CreateCategoryDTO from 'src/domain/dtos/category/createCategoryDTO';
 import IDbContext from 'src/infra/interfaces/IDbContext';
 import CategoryService from 'src/services/CategoryService';
@@ -20,6 +21,18 @@ export default class CategoryRouter implements IRouterBase {
     return await this._categoryService.saveCategory(createCategory);
   }
 
+  async getCategory(id: string): Promise<CategoryDTO | null> {
+    return await this._categoryService.getCategory(id);
+  }
+
+  async getCategories(): Promise<CategoryDTO[]> {
+    return await this._categoryService.getCategories();
+  }
+
+  async deleteCaterory(category: string): Promise<boolean> {
+    return await this._categoryService.removeCategory(category);
+  }
+
 
   register(router: Router): void {
     router.get(
@@ -31,7 +44,7 @@ export default class CategoryRouter implements IRouterBase {
       ): Promise<void> => {
         try {
           const id = req.params.id;
-          const categories = await this._categoryService.getCategory(id);
+          const categories = await this.getCategory(id);
           resp.send(categories);
 
           return next();
@@ -50,7 +63,7 @@ export default class CategoryRouter implements IRouterBase {
         next: NextFunction
       ): Promise<void> => {
         try {
-          const categories = await this._categoryService.getCategories();
+          const categories = await this.getCategories();
           resp.send(categories);
 
           return next();
@@ -68,7 +81,7 @@ export default class CategoryRouter implements IRouterBase {
         next: NextFunction
       ): Promise<void> => {
         try {
-          const result = await this._categoryService.saveCategory(req.body)
+          const result = await this.createCategory(req.body)
           resp.send(result);
 
           return next();
@@ -88,7 +101,7 @@ export default class CategoryRouter implements IRouterBase {
         try {
           const category = req.params.category;
 
-          const result = await this._categoryService.removeCategory(category);
+          const result = await this.deleteCaterory(category);
           resp.send(result);
 
           return next();

@@ -35,11 +35,10 @@ export default abstract class MongoRepository<T extends EntityBase> implements I
     return !!result.result.ok;
   }
   async find(query?: FilterQuery<any>): Promise<T[]> {
-    console.log(query)
     const result = await this._collection.find<T>(query);
-
     return await result.toArray()
   }
+
   async findById(id: string): Promise<T | null> {
     const result = await this._collection.findOne<T>({ _id: new ObjectID(id)});
 

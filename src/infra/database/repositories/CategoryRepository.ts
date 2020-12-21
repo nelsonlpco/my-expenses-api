@@ -7,9 +7,4 @@ export class CategoryRepository extends MongoRepository<Category>{
   constructor(dbContext: IDbContext) {
     super(dbContext, 'categories');
   }
-
-  countOfCategories(): Promise<number> {
-    return this._collection.countDocuments();
-  }
-
 }
