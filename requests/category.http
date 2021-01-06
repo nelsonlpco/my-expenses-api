@@ -11,7 +11,7 @@ POST http://localhost:3000/api/category
 Content-Type: application/json
 
 {
-  "description": "Mercado"
+  "description": "nuss"
 }
 
 ### DELETE CATEGORY

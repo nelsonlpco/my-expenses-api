@@ -2,22 +2,23 @@ import CategoryDTO from "src/domain/dtos/category/CategoryDTO";
 import CreateCategoryDTO from "src/domain/dtos/category/createCategoryDTO";
 import Category from "src/domain/entities/Category";
 import { CategoryRepository } from "src/infra/database/repositories/CategoryRepository";
-import IDbContext from "src/infra/interfaces/IDbContext";
 
 export default class CategoryService {
   private readonly _categoryRepository: CategoryRepository;
 
-  constructor(dbContext: IDbContext){
-     this._categoryRepository = new CategoryRepository(dbContext);
+  constructor(categoryRepository: CategoryRepository){
+     this._categoryRepository  = categoryRepository;
   }
 
-  async saveCategory(createCategory: CreateCategoryDTO): Promise<boolean>{
+  async saveCategory(createCategory: CreateCategoryDTO): Promise<Category>{
     const savedCategory = await this._categoryRepository.find(createCategory)
 
     if(savedCategory.length > 0)
       throw new Error('Categoria já cadastradas');
 
-    return await this._categoryRepository.create(new Category(createCategory.description));
+    const id = await this._categoryRepository.create(new Category(createCategory.description));
+
+    return new Category(createCategory.description, id);
   }
 
   async getCategory(id: string): Promise<Category | null> {

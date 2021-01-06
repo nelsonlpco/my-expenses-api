@@ -7,8 +7,8 @@ export default class DbContext implements IDbContext {
   private _connection?: MongoClient;
   private _db?:Db;
 
-  constructor(configurations: ConfigurationManager) {
-    this._configurations = configurations;
+  constructor(config: ConfigurationManager) {
+    this._configurations = config;
   }
   getCollection(collection: string): Collection<any> | undefined {
     if(this._db)

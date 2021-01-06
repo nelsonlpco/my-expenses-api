@@ -17,10 +17,10 @@ export default abstract class MongoRepository<T extends EntityBase> implements I
     throw new Error('Method not implemented.');
   }
 
-  async create(item: T): Promise<boolean> {
+  async create(item: T): Promise<string> {
     const result = await this._collection.insertOne(item);
 
-    return !!result.result.ok;
+    return result.insertedId;
   }
 
   async update(id: string, item: T): Promise<boolean> {
